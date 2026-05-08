@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ car.brand }} {{ car.model }} — AutoCost Tracker{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-start mb-4">
+    <div>
+        <h1 class="mb-1">{{ car.brand }} {{ car.model }}</h1>
+        <p class="text-muted mb-0">
+            Информация об автомобиле и последние расходы.
+        </p>
+    </div>
+
+    <div class="d-flex gap-2">
+        <a href="{% url 'car_update' car.pk %}" class="btn btn-outline-primary">
+            Редактировать
+        </a>
+
+        <a href="{% url 'car_delete' car.pk %}" class="btn btn-outline-danger">
+            Удалить
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Данные автомобиля</h5>
+
+                <table class="table mb-0">
+                    <tr>
+                        <th>Марка</th>
+                        <td>{{ car.brand }}</td>
+                    </tr>
+                    <tr>
+                        <th>Модель</th>
+                        <td>{{ car.model }}</td>
+                    </tr>
+                    <tr>
+                        <th>Год выпуска</th>
+                        <td>{{ car.year }}</td>
+                    </tr>
+                    <tr>
+                        <th>Тип топлива</th>
+                        <td>{{ car.get_fuel_type_display }}</td>
+                    </tr>
+                    <tr>
+                        <th>Объем двигателя</th>
+                        <td>{{ car.engine_volume }} л</td>
+                    </tr>
+                    <tr>
+                        <th>Пробег</th>
+                        <td>{{ car.mileage }} км</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-7">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Последние расходы</h5>
+
+                {% if expenses %}
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Дата</th>
+                                    <th>Категория</th>
+                                    <th>Сумма</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for expense in expenses %}
+                                    <tr>
+                                        <td>{{ expense.expense_date }}</td>
+                                        <td>{{ expense.category.name }}</td>
+                                        <td>{{ expense.amount }} ₽</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted mb-0">
+                        По этому автомобилю пока нет расходов.
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <a href="{% url 'car_list' %}" class="btn btn-outline-secondary">
+        Назад к списку
+    </a>
+</div>
+{% endblock %}

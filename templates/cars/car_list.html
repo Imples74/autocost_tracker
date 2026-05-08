@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Мои автомобили — AutoCost Tracker{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="mb-1">Мои автомобили</h1>
+        <p class="text-muted mb-0">
+            Здесь отображаются автомобили, по которым ведется учет расходов.
+        </p>
+    </div>
+
+    <a href="{% url 'car_create' %}" class="btn btn-primary">
+        Добавить автомобиль
+    </a>
+</div>
+
+{% if cars %}
+    <div class="row g-4">
+        {% for car in cars %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {{ car.brand }} {{ car.model }}
+                        </h5>
+
+                        <p class="card-text text-muted">
+                            {{ car.year }} год · {{ car.get_fuel_type_display }}
+                        </p>
+
+                        <p class="mb-1">
+                            <strong>Объем двигателя:</strong> {{ car.engine_volume }} л
+                        </p>
+
+                        <p class="mb-3">
+                            <strong>Пробег:</strong> {{ car.mileage }} км
+                        </p>
+
+                        <a href="{% url 'car_detail' car.pk %}" class="btn btn-outline-primary">
+                            Подробнее
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        У вас пока нет добавленных автомобилей.
+        Нажмите кнопку “Добавить автомобиль”, чтобы создать первую запись.
+    </div>
+{% endif %}
+{% endblock %}

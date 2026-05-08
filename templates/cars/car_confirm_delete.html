@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Удаление автомобиля — AutoCost Tracker{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card shadow-sm border-danger">
+            <div class="card-body">
+                <h1 class="h3 mb-3">Удалить автомобиль?</h1>
+
+                <p>
+                    Вы действительно хотите удалить автомобиль
+                    <strong>{{ car.brand }} {{ car.model }}</strong>?
+                </p>
+
+                <p class="text-danger">
+                    Вместе с автомобилем будут удалены все связанные расходы.
+                </p>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-danger">
+                            Удалить
+                        </button>
+
+                        <a href="{% url 'car_detail' car.pk %}" class="btn btn-outline-secondary">
+                            Отмена
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
