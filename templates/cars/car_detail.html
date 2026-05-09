@@ -16,6 +16,10 @@
             Добавить расход
         </a>
 
+        <a href="{% url 'analytics' %}?car={{ car.pk }}" class="btn btn-outline-success">
+            Аналитика
+        </a>
+
         <a href="{% url 'car_update' car.pk %}" class="btn btn-outline-primary">
             Редактировать
         </a>

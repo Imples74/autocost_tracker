@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block title %}Аналитика — AutoCost Tracker{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-start mb-4">
+    <div>
+        <h1 class="mb-1">Аналитика расходов</h1>
+        <p class="text-muted mb-0">
+            Статистика, графики и прогноз расходов по выбранному автомобилю.
+        </p>
+    </div>
+</div>
+
+{% if cars %}
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3 align-items-end">
+                <div class="col-md-8">
+                    <label for="car" class="form-label">Автомобиль</label>
+                    <select name="car" id="car" class="form-select">
+                        {% for car in cars %}
+                            <option value="{{ car.pk }}" {% if selected_car and car.pk == selected_car.pk %}selected{% endif %}>
+                                {{ car.brand }} {{ car.model }} ({{ car.year }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary w-100">
+                        Показать аналитику
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if selected_car %}
+        <div class="mb-4">
+            <h2 class="h4">
+                {{ selected_car.brand }} {{ selected_car.model }}
+            </h2>
+            <p class="text-muted">
+                Аналитика сформирована на основе расходов, добавленных пользователем.
+            </p>
+        </div>
+    {% endif %}
+
+    {% if has_expenses %}
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Всего расходов</p>
+                        <h3 class="mb-0">{{ total_amount }} ₽</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Средний расход в месяц</p>
+                        <h3 class="mb-0">{{ average_monthly_amount }} ₽</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Самая затратная категория</p>
+                        <h5 class="mb-1">{{ top_category.name }}</h5>
+                        <strong>{{ top_category.amount }} ₽</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow-sm h-100 border-success">
+                    <div class="card-body">
+                        <p class="text-muted mb-1">Прогноз на следующий месяц</p>
+                        <h3 class="mb-0">{{ forecast_amount }} ₽</h3>
+                        <small class="text-muted">
+                            {{ forecast_month|date:"F Y" }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-7">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Динамика расходов по месяцам</h5>
+                        <canvas id="monthlyChart" height="120"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Расходы по категориям</h5>
+                        <canvas id="categoryChart" height="180"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-info mt-4">
+            Прогноз рассчитывается как среднее значение расходов за последние доступные месяцы,
+            максимум за 3 месяца.
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            Для выбранного автомобиля пока нет расходов. Добавьте несколько расходов,
+            чтобы увидеть аналитику и прогноз.
+        </div>
+    {% endif %}
+{% else %}
+    <div class="alert alert-warning">
+        У вас пока нет автомобилей. Сначала добавьте автомобиль, затем внесите расходы.
+    </div>
+
+    <a href="{% url 'car_create' %}" class="btn btn-primary">
+        Добавить автомобиль
+    </a>
+{% endif %}
+
+{% if has_expenses %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const monthLabels = {{ month_labels_json|safe }};
+        const monthValues = {{ month_values_json|safe }};
+        const categoryLabels = {{ category_labels_json|safe }};
+        const categoryValues = {{ category_values_json|safe }};
+
+        const monthlyContext = document.getElementById('monthlyChart');
+
+        new Chart(monthlyContext, {
+            type: 'line',
+            data: {
+                labels: monthLabels,
+                datasets: [{
+                    label: 'Расходы по месяцам',
+                    data: monthValues,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const categoryContext = document.getElementById('categoryChart');
+
+        new Chart(categoryContext, {
+            type: 'doughnut',
+            data: {
+                labels: categoryLabels,
+                datasets: [{
+                    label: 'Расходы по категориям',
+                    data: categoryValues
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
+{% endif %}
+{% endblock %}
