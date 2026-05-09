@@ -13,7 +13,7 @@
 Проект будет размещен на PythonAnywhere.
 
 **Ссылка на сайт:**  
-`https://your-login.pythonanywhere.com`
+`https://annabat.pythonanywhere.com`
 
 ---
 
