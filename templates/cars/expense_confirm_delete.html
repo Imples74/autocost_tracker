@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Удаление расхода — AutoCost Tracker{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card shadow-sm border-danger">
+            <div class="card-body">
+                <h1 class="h3 mb-3">Удалить расход?</h1>
+
+                <p>
+                    Вы действительно хотите удалить расход
+                    <strong>{{ expense.category.name }}</strong>
+                    на сумму
+                    <strong>{{ expense.amount }} ₽</strong>?
+                </p>
+
+                <p class="text-muted">
+                    Автомобиль: {{ expense.car.brand }} {{ expense.car.model }}
+                </p>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-danger">
+                            Удалить
+                        </button>
+
+                        <a href="{% url 'expense_list' %}" class="btn btn-outline-secondary">
+                            Отмена
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
