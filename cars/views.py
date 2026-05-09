@@ -3,15 +3,32 @@ from datetime import date
 from decimal import Decimal
 
 import pandas as pd
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import CarForm, ExpenseFilterForm, ExpenseForm
+from .forms import CarForm, ExpenseFilterForm, ExpenseForm, RegisterForm
 from .models import Car, Expense, MonthlyForecast
 
 
 def home(request):
     return render(request, 'home.html')
+
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('car_list')
+    else:
+        form = RegisterForm()
+
+    return render(request, 'registration/register.html', {
+        'form': form,
+    })
 
 
 @login_required

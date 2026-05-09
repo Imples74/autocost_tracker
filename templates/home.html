@@ -20,13 +20,23 @@
             </p>
 
             <div class="d-flex gap-2 mt-4">
-                <a href="/admin/" class="btn btn-primary">
-                    Перейти в админку
-                </a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'car_list' %}" class="btn btn-primary">
+                        Перейти к автомобилям
+                    </a>
 
-                <a href="#features" class="btn btn-outline-secondary">
-                    Возможности сервиса
-                </a>
+                    <a href="{% url 'analytics' %}" class="btn btn-outline-success">
+                        Смотреть аналитику
+                    </a>
+                {% else %}
+                    <a href="{% url 'register' %}" class="btn btn-primary">
+                        Начать работу
+                    </a>
+
+                    <a href="{% url 'login' %}" class="btn btn-outline-secondary">
+                        Войти
+                    </a>
+                {% endif %}
             </div>
         </div>
     </div>

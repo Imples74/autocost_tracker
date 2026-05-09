@@ -117,6 +117,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-LOGIN_URL = '/admin/login/'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'car_list'
+LOGOUT_REDIRECT_URL = 'home'
