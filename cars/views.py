@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .forms import CarForm
+from .models import Car
 
 def home(request):
     return render(request, 'home.html')
@@ -20,7 +21,7 @@ def car_create(request):
 
             car.save()
 
-            return redirect('/')
+            return redirect('/cars/')
 
     else:
 
@@ -31,5 +32,17 @@ def car_create(request):
         'cars/car_form.html',
         {
             'form': form
+        }
+    )
+
+def car_list(request):
+
+    cars = Car.objects.all()
+
+    return render(
+        request,
+        'cars/car_list.html',
+        {
+            'cars': cars
         }
     )
