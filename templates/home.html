@@ -1,102 +1,25 @@
 {% extends 'base.html' %}
 
-{% block title %}Главная — AutoCost Tracker{% endblock %}
+{% block title %}
+Главная
+{% endblock %}
 
 {% block content %}
-<div class="row align-items-center">
-  <div class="col-lg-7">
-    <div class="p-5 bg-white rounded shadow-sm">
-      <h1 class="display-5 fw-bold mb-3">
-        AutoCost Tracker
-      </h1>
 
-      <p class="lead">
-        Веб-сервис для учета, анализа и прогнозирования расходов на содержание автомобиля.
-      </p>
+<div class="card">
 
-      <p>
-        Сервис помогает автовладельцам фиксировать расходы, распределять их по категориям,
-        анализировать структуру затрат и планировать бюджет на следующий месяц.
-      </p>
+    <div class="card-body">
 
-      <div class="d-flex gap-2 mt-4">
-        {% if user.is_authenticated %}
-        <a href="{% url 'car_list' %}" class="btn btn-primary">
-          Перейти к автомобилям
-        </a>
+        <h2>
+            Добро пожаловать в AutoCost Tracker
+        </h2>
 
-        <a href="{% url 'analytics' %}" class="btn btn-outline-success">
-          Смотреть аналитику
-        </a>
-        {% else %}
-        <a href="{% url 'register' %}" class="btn btn-primary">
-          Начать работу
-        </a>
+        <p>
+            Система учёта расходов на автомобиль.
+        </p>
 
-        <a href="{% url 'login' %}" class="btn btn-outline-secondary">
-          Войти
-        </a>
-        {% endif %}
-      </div>
     </div>
-  </div>
 
-  <div class="col-lg-5 mt-4 mt-lg-0">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h5 class="card-title">Что умеет сервис</h5>
-
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Учет одного или нескольких автомобилей</li>
-          <li class="list-group-item">Добавление расходов по категориям</li>
-          <li class="list-group-item">Фильтрация расходов по датам</li>
-          <li class="list-group-item">Аналитика расходов</li>
-          <li class="list-group-item">Прогноз затрат на следующий месяц</li>
-        </ul>
-      </div>
-    </div>
-  </div>
 </div>
 
-<section id="features" class="mt-5">
-  <h2 class="mb-4">Основные возможности</h2>
-
-  <div class="row g-4">
-    <div class="col-md-4">
-      <div class="card h-100 shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Учет расходов</h5>
-          <p class="card-text">
-            Пользователь может добавлять расходы на топливо, ремонт, страховку,
-            парковку, мойку и другие категории.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card h-100 shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Аналитика</h5>
-          <p class="card-text">
-            Система рассчитывает общую сумму расходов, средние траты,
-            самые затратные категории и динамику по месяцам.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card h-100 shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Прогноз</h5>
-          <p class="card-text">
-            На основе истории расходов сервис рассчитывает примерную сумму,
-            которую пользователь может потратить в следующем месяце.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 {% endblock %}
