@@ -3,6 +3,8 @@ from .forms import CarForm
 from .models import Car
 from .forms import CarForm, ExpenseForm
 from .models import Car, Expense
+from django.db.models import Sum, Count
+
 
 def home(request):
     return render(request, 'home.html')
@@ -77,10 +79,45 @@ def expense_list(request):
 
     expenses = Expense.objects.all()
 
+    total_amount = (
+        expenses.aggregate(
+            total=Sum('amount')
+        )['total']
+        or 0
+    )
+
+    expense_count = expenses.count()
+
+    category_stats = (
+        Expense.objects
+        .values('category__name')
+        .annotate(
+            total=Sum('amount')
+        )
+        .order_by('-total')
+    )
+
+    top_category = None
+
+    if category_stats:
+        top_category = category_stats[0]
+
+    average_expense = 0
+
+    if expense_count:
+        average_expense = (
+            total_amount /
+            expense_count
+        )
+
     return render(
         request,
         'cars/expense_list.html',
         {
-            'expenses': expenses
+            'expenses': expenses,
+            'total_amount': total_amount,
+            'expense_count': expense_count,
+            'top_category': top_category,
+            'average_expense': average_expense,
         }
     )
