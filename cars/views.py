@@ -3,7 +3,7 @@ from .forms import CarForm, ExpenseForm
 from .models import Car, Expense, ExpenseCategory
 from django.db.models import Sum, Count
 import json
-
+from django.db.models.functions import TruncMonth
 
 
 def home(request):
@@ -134,6 +134,25 @@ def expense_list(request):
         .order_by('-total')
     )
 
+    monthly_stats = (
+        Expense.objects
+        .annotate(month=TruncMonth('date'))
+        .values('month')
+        .annotate(total=Sum('amount'))
+        .order_by('-month')[:3]
+    )
+
+    forecast = 0
+
+    if monthly_stats:
+
+        total_sum = 0
+
+        for month in monthly_stats:
+            total_sum += month['total']
+
+        forecast = total_sum / len(monthly_stats)
+
     labels = []
     totals = []
 
@@ -161,5 +180,6 @@ def expense_list(request):
             'selected_category': category_id,
             'chart_labels': json.dumps(labels),
             'chart_totals': json.dumps(totals),
+            'forecast': round(forecast, 2),
         }
     )
