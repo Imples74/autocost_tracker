@@ -2,6 +2,8 @@ from django.shortcuts import render
 from .forms import CarForm, ExpenseForm
 from .models import Car, Expense, ExpenseCategory
 from django.db.models import Sum, Count
+import json
+
 
 
 def home(request):
@@ -125,6 +127,23 @@ def expense_list(request):
 
     categories = ExpenseCategory.objects.all()
 
+    category_chart = (
+        expenses
+        .values('category__name')
+        .annotate(total=Sum('amount'))
+        .order_by('-total')
+    )
+
+    labels = []
+    totals = []
+
+    for item in category_chart:
+        labels.append(item['category__name'])
+        totals.append(float(item['total']))
+
+    print(labels)
+    print(totals)
+
     return render(
         request,
         'cars/expense_list.html',
@@ -140,5 +159,7 @@ def expense_list(request):
 
             'selected_car': car_id,
             'selected_category': category_id,
+            'chart_labels': json.dumps(labels),
+            'chart_totals': json.dumps(totals),
         }
     )

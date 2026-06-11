@@ -163,6 +163,20 @@
 
 </div>
 
+<div class="card mb-4">
+
+    <div class="card-body">
+
+        <h4>Расходы по категориям</h4>
+
+        <div style="max-width: 500px; margin: auto;">
+            <canvas id="expenseChart"></canvas>
+        </div>
+
+    </div>
+
+</div>
+
 <table class="table table-striped">
 
     <thead>
@@ -198,5 +212,42 @@
     </tbody>
 
 </table>
+
+
+
+
+<script>
+
+const ctx =
+    document.getElementById(
+        'expenseChart'
+    );
+
+new Chart(ctx, {
+
+    type: 'pie',
+
+    data: {
+
+        labels: {{ chart_labels|safe }},
+
+        datasets: [{
+
+            data: {{ chart_totals|safe }}
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+        maintainAspectRatio: true
+
+    }
+
+});
+
+</script>
 
 {% endblock %}
