@@ -16,11 +16,6 @@
         rel="stylesheet"></link>
 </head>
 
-<script>
-console.log("BASE TEMPLATE LOADED");
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <body>
 
@@ -50,14 +45,30 @@ console.log("BASE TEMPLATE LOADED");
       </a>
 
       <a class="nav-link"
-        href="/expenses/">
+          href="/expenses/">
         Расходы
       </a>
 
       <a class="nav-link"
-        href="/expenses/create/">
+          href="/expenses/create/">
         Добавить расход
       </a>
+
+      {% if user.is_authenticated %}
+
+      <a class="nav-link"
+          href="/logout/">
+        Выход
+      </a>
+
+      {% else %}
+
+      <a class="nav-link"
+          href="/login/">
+        Вход
+      </a>
+
+      {% endif %}
 
     </div>
 
