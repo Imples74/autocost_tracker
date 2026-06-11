@@ -1,8 +1,6 @@
 from django.shortcuts import render
-from .forms import CarForm
-from .models import Car
 from .forms import CarForm, ExpenseForm
-from .models import Car, Expense
+from .models import Car, Expense, ExpenseCategory
 from django.db.models import Sum, Count
 
 
@@ -79,6 +77,19 @@ def expense_list(request):
 
     expenses = Expense.objects.all()
 
+    car_id = request.GET.get('car')
+    category_id = request.GET.get('category')
+
+    if car_id:
+        expenses = expenses.filter(
+            car_id=car_id
+        )
+
+    if category_id:
+        expenses = expenses.filter(
+            category_id=category_id
+        )
+
     total_amount = (
         expenses.aggregate(
             total=Sum('amount')
@@ -110,6 +121,10 @@ def expense_list(request):
             expense_count
         )
 
+    cars = Car.objects.all()
+
+    categories = ExpenseCategory.objects.all()
+
     return render(
         request,
         'cars/expense_list.html',
@@ -119,5 +134,11 @@ def expense_list(request):
             'expense_count': expense_count,
             'top_category': top_category,
             'average_expense': average_expense,
+
+            'cars': cars,
+            'categories': categories,
+
+            'selected_car': car_id,
+            'selected_category': category_id,
         }
     )
