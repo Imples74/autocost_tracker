@@ -251,3 +251,67 @@ def car_delete(request, pk):
         'cars/car_confirm_delete.html',
         {'car': car}
     )
+
+@login_required
+def expense_update(request, pk):
+
+    expense = get_object_or_404(
+        Expense,
+        pk=pk,
+        car__owner=request.user
+    )
+
+    if request.method == 'POST':
+
+        form = ExpenseForm(
+            request.POST,
+            instance=expense
+        )
+
+        if form.is_valid():
+            form.save()
+
+            return redirect(
+                'expense_list'
+            )
+
+    else:
+
+        form = ExpenseForm(
+            instance=expense
+        )
+
+    form.fields['car'].queryset = (
+        Car.objects.filter(
+            owner=request.user
+        )
+    )
+
+    return render(
+        request,
+        'cars/expense_form.html',
+        {'form': form}
+    )
+
+@login_required
+def expense_delete(request, pk):
+
+    expense = get_object_or_404(
+        Expense,
+        pk=pk,
+        car__owner=request.user
+    )
+
+    if request.method == 'POST':
+
+        expense.delete()
+
+        return redirect(
+            'expense_list'
+        )
+
+    return render(
+        request,
+        'cars/expense_confirm_delete.html',
+        {'expense': expense}
+    )
