@@ -4,44 +4,42 @@ from .models import Car, Expense, ExpenseCategory
 from django.db.models import Sum, Count
 import json
 from django.db.models.functions import TruncMonth
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def home(request):
     return render(request, 'home.html')
 
 from django.shortcuts import redirect
 
+@login_required
 def car_create(request):
 
     if request.method == 'POST':
-
         form = CarForm(request.POST)
 
         if form.is_valid():
-
             car = form.save(commit=False)
-
             car.owner = request.user
-
             car.save()
 
-            return redirect('/cars/')
+            return redirect('car_list')
 
     else:
-
         form = CarForm()
 
     return render(
         request,
         'cars/car_form.html',
-        {
-            'form': form
-        }
+        {'form': form}
     )
 
+@login_required
 def car_list(request):
 
-    cars = Car.objects.all()
+    cars = Car.objects.filter(
+        owner=request.user
+    )
 
     return render(
         request,
@@ -51,11 +49,17 @@ def car_list(request):
         }
     )
 
+@login_required
 def expense_create(request):
 
     if request.method == 'POST':
 
         form = ExpenseForm(request.POST)
+        form.fields['car'].queryset = (
+            Car.objects.filter(
+                owner=request.user
+            )
+        )
 
         if form.is_valid():
 
@@ -75,9 +79,12 @@ def expense_create(request):
         }
     )
 
+@login_required
 def expense_list(request):
 
-    expenses = Expense.objects.all()
+    expenses = Expense.objects.filter(
+        car__owner=request.user
+    )
 
     car_id = request.GET.get('car')
     category_id = request.GET.get('category')
@@ -123,7 +130,9 @@ def expense_list(request):
             expense_count
         )
 
-    cars = Car.objects.all()
+    cars = Car.objects.filter(
+        owner=request.user
+    )
 
     categories = ExpenseCategory.objects.all()
 

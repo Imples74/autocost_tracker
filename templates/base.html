@@ -56,10 +56,21 @@
 
       {% if user.is_authenticated %}
 
-      <a class="nav-link"
-          href="/logout/">
-        Выход
-      </a>
+      <form method="post"
+            action="/logout/"
+            class="d-inline">
+
+        {% csrf_token %}
+
+        <button type="submit"
+                class="btn btn-link nav-link"
+                style="display:inline;padding:0;border:none;">
+
+          Выход
+
+        </button>
+
+      </form>
 
       {% else %}
 
