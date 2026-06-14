@@ -42,11 +42,22 @@ def car_list(request):
         owner=request.user
     )
 
+    search = request.GET.get(
+        'search'
+    )
+
+    if search:
+
+        cars = cars.filter(
+            brand__icontains=search
+        )
+
     return render(
         request,
         'cars/car_list.html',
         {
-            'cars': cars
+            'cars': cars,
+            'search': search,
         }
     )
 
