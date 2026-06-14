@@ -69,6 +69,41 @@
 
     <div class="col-md-2">
 
+    <select
+        name="sort"
+        class="form-select">
+
+        <option value="">
+            Сортировка
+        </option>
+
+        <option value="date"
+            {% if sort == 'date' %}
+            selected
+            {% endif %}>
+            По дате
+        </option>
+
+        <option value="amount"
+            {% if sort == 'amount' %}
+            selected
+            {% endif %}>
+            По сумме
+        </option>
+
+        <option value="category"
+            {% if sort == 'category' %}
+            selected
+            {% endif %}>
+            По категории
+        </option>
+
+    </select>
+
+</div>
+
+    <div class="col-md-2">
+
         <button
             class="btn btn-primary">
 

@@ -158,6 +158,10 @@ def expense_list(request):
     car_id = request.GET.get('car')
     category_id = request.GET.get('category')
 
+    sort = request.GET.get(
+        'sort'
+    )
+
     if car_id:
         expenses = expenses.filter(
             car_id=car_id
@@ -166,6 +170,21 @@ def expense_list(request):
     if category_id:
         expenses = expenses.filter(
             category_id=category_id
+        )
+
+    if sort == 'date':
+        expenses = expenses.order_by(
+            '-date'
+        )
+
+    elif sort == 'amount':
+        expenses = expenses.order_by(
+            '-amount'
+        )
+
+    elif sort == 'category':
+        expenses = expenses.order_by(
+            'category__name'
         )
 
     total_amount = (
@@ -259,6 +278,7 @@ def expense_list(request):
             'chart_labels': json.dumps(labels),
             'chart_totals': json.dumps(totals),
             'forecast': round(forecast, 2),
+            'sort': sort,
         }
     )
 
