@@ -23,6 +23,41 @@
 
     </div>
 
+    <div class="col-md-3">
+
+        <select
+            name="sort"
+            class="form-select">
+
+            <option value="">
+                Без сортировки
+            </option>
+
+            <option value="brand"
+                {% if sort == 'brand' %}
+                selected
+                {% endif %}>
+                По марке
+            </option>
+
+            <option value="year"
+                {% if sort == 'year' %}
+                selected
+                {% endif %}>
+                По году
+            </option>
+
+            <option value="mileage"
+                {% if sort == 'mileage' %}
+                selected
+                {% endif %}>
+                По пробегу
+            </option>
+
+        </select>
+
+    </div>
+
     <div class="col-md-2">
 
         <button

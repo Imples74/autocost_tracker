@@ -89,12 +89,32 @@ def car_list(request):
             brand__icontains=search
         )
 
+    sort = request.GET.get(
+        'sort'
+    )
+
+    if sort == 'brand':
+        cars = cars.order_by(
+            'brand'
+        )
+
+    elif sort == 'year':
+        cars = cars.order_by(
+            '-year'
+        )
+
+    elif sort == 'mileage':
+        cars = cars.order_by(
+            '-mileage'
+        )
+
     return render(
         request,
         'cars/car_list.html',
         {
             'cars': cars,
             'search': search,
+            'sort': sort,
         }
     )
 
