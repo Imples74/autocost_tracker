@@ -6,10 +6,47 @@ import json
 from django.db.models.functions import TruncMonth
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+from django.db.models import Sum
 
 @login_required
 def home(request):
-    return render(request, 'home.html')
+
+    if request.user.is_authenticated:
+
+        cars_count = (
+            Car.objects.filter(
+                owner=request.user
+            ).count()
+        )
+
+        expenses = Expense.objects.filter(
+            car__owner=request.user
+        )
+
+        expenses_count = expenses.count()
+
+        total_expenses = (
+            expenses.aggregate(
+                total=Sum('amount')
+            )['total']
+            or 0
+        )
+
+    else:
+
+        cars_count = 0
+        expenses_count = 0
+        total_expenses = 0
+
+    return render(
+        request,
+        'home.html',
+        {
+            'cars_count': cars_count,
+            'expenses_count': expenses_count,
+            'total_expenses': total_expenses,
+        }
+    )
 
 from django.shortcuts import redirect
 

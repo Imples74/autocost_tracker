@@ -6,24 +6,101 @@
 
 {% block content %}
 
+<h1 class="mb-4">
+    AutoCost Tracker
+</h1>
+
+<p class="lead">
+    Система учёта расходов на автомобиль
+</p>
+
+<div class="row mb-4">
+
+    <div class="col-md-4">
+
+        <div class="card text-center">
+
+            <div class="card-body">
+
+                <h5>
+                    Автомобили
+                </h5>
+
+                <h2>
+                    {{ cars_count }}
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card text-center">
+
+            <div class="card-body">
+
+                <h5>
+                    Расходы
+                </h5>
+
+                <h2>
+                    {{ expenses_count }}
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card text-center">
+
+            <div class="card-body">
+
+                <h5>
+                    Общая сумма
+                </h5>
+
+                <h2>
+                    {{ total_expenses }}
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 <div class="card">
 
     <div class="card-body">
 
-        <h2>
-            Добро пожаловать в AutoCost Tracker
-        </h2>
+        <h4>
+            Быстрые действия
+        </h4>
 
         <a
             href="/cars/create/"
-            class="btn btn-success">
+            class="btn btn-success me-2">
 
             Добавить автомобиль
+
         </a>
 
-        <p>
-            Система учёта расходов на автомобиль.
-        </p>
+        <a
+            href="/expenses/create/"
+            class="btn btn-primary">
+
+            Добавить расход
+
+        </a>
 
     </div>
 
