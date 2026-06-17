@@ -16,12 +16,13 @@
         rel="stylesheet"></link>
 </head>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-
+    
     <a class="navbar-brand"
         href="/">
       AutoCost Tracker
@@ -39,10 +40,6 @@
         Автомобили
       </a>
 
-      <a class="nav-link"
-          href="/cars/create/">
-        Добавить автомобиль
-      </a>
 
       <a class="nav-link"
           href="/expenses/">
@@ -50,8 +47,8 @@
       </a>
 
       <a class="nav-link"
-          href="/expenses/create/">
-        Добавить расход
+          href="/analytics/">
+        Аналитика
       </a>
 
       {% if user.is_authenticated %}
@@ -92,6 +89,6 @@
   {% endblock %}
 
 </div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </body>
 </html>

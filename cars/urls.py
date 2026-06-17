@@ -1,5 +1,4 @@
 from django.urls import path
-from .views import home, car_create, car_list
 from .views import (
     home,
     car_create,
@@ -10,6 +9,7 @@ from .views import (
     car_delete,
     expense_update,
     expense_delete,
+    analytics,
 )
 
 
@@ -44,5 +44,11 @@ urlpatterns = [
         'cars/<int:pk>/delete/',
         car_delete,
         name='car_delete'
+    ),
+
+    path(
+        'analytics/',
+        analytics,
+        name='analytics'
     ),
 ]

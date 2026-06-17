@@ -162,6 +162,9 @@ def expense_list(request):
         'sort'
     )
 
+    print("SORT =", sort)
+    print(expenses.query)
+
     if car_id:
         expenses = expenses.filter(
             car_id=car_id
@@ -402,4 +405,80 @@ def expense_delete(request, pk):
         request,
         'cars/expense_confirm_delete.html',
         {'expense': expense}
+    )
+
+@login_required
+def analytics(request):
+
+    expenses = Expense.objects.filter(
+        car__owner=request.user
+    )
+
+    total_amount = (
+        expenses.aggregate(
+            total=Sum('amount')
+        )['total']
+        or 0
+    )
+
+    expense_count = expenses.count()
+
+    average_expense = 0
+
+    if expense_count:
+        average_expense = (
+            total_amount /
+            expense_count
+        )
+
+    category_stats = (
+        expenses
+        .values('category__name')
+        .annotate(
+            total=Sum('amount')
+        )
+        .order_by('-total')
+    )
+
+    top_category = None
+
+    if category_stats:
+        top_category = category_stats[0]
+
+    monthly_stats = (
+        expenses
+        .annotate(
+            month=TruncMonth('date')
+        )
+        .values('month')
+        .annotate(
+            total=Sum('amount')
+        )
+        .order_by('month')
+    )
+
+    month_labels = []
+    month_totals = []
+
+    for item in monthly_stats:
+
+        month_labels.append(
+            item['month'].strftime('%m.%Y')
+        )
+
+        month_totals.append(
+            float(item['total'])
+        )
+
+    return render(
+        request,
+        'cars/analytics.html',
+        {
+            'total_amount': total_amount,
+            'expense_count': expense_count,
+            'average_expense': average_expense,
+            'top_category': top_category,
+            'month_labels': json.dumps(month_labels),
+            'month_totals': json.dumps(month_totals),
+        }
     )
