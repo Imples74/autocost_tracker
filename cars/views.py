@@ -506,3 +506,36 @@ def analytics(request):
             'category_totals': json.dumps(category_totals),
         }
     )
+
+@login_required
+def car_detail(request, pk):
+
+    car = get_object_or_404(
+        Car,
+        pk=pk,
+        owner=request.user
+    )
+
+    expenses = Expense.objects.filter(
+        car=car
+    ).order_by('-date')
+
+    total_expenses = (
+        expenses.aggregate(
+            total=Sum('amount')
+        )['total']
+        or 0
+    )
+
+    expense_count = expenses.count()
+
+    return render(
+        request,
+        'cars/car_detail.html',
+        {
+            'car': car,
+            'expenses': expenses,
+            'total_expenses': total_expenses,
+            'expense_count': expense_count,
+        }
+    )

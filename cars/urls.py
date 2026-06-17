@@ -10,6 +10,7 @@ from .views import (
     expense_update,
     expense_delete,
     analytics,
+    car_detail,
 )
 
 
@@ -21,6 +22,12 @@ urlpatterns = [
 
     path('expenses/', expense_list, name='expense_list'),
     path('expenses/create/', expense_create, name='expense_create'),
+
+    path(
+        'cars/<int:pk>/',
+        car_detail,
+        name='car_detail'
+    ),
 
     path(
         'cars/<int:pk>/edit/',
@@ -51,4 +58,6 @@ urlpatterns = [
         analytics,
         name='analytics'
     ),
+
+
 ]

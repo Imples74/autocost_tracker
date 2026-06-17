@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ car }}
+{% endblock %}
+
+{% block content %}
+
+<h2>{{ car.brand }} {{ car.model }}</h2>
+
+<div class="card mb-4">
+
+    <div class="card-body">
+
+        <p><strong>Год:</strong> {{ car.year }}</p>
+
+        <p><strong>Топливо:</strong> {{ car.fuel_type }}</p>
+
+        <p><strong>Объем двигателя:</strong> {{ car.engine_volume }}</p>
+
+        <p><strong>Пробег:</strong> {{ car.mileage }}</p>
+
+    </div>
+
+</div>
+
+<div class="row mb-4">
+
+    <div class="col-md-6">
+
+        <div class="card">
+
+            <div class="card-body">
+
+                <h5>Всего расходов</h5>
+
+                <h3>{{ total_expenses }}</h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="card">
+
+            <div class="card-body">
+
+                <h5>Количество расходов</h5>
+
+                <h3>{{ expense_count }}</h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<h4>Расходы</h4>
+
+<table class="table table-striped">
+
+    <thead>
+
+        <tr>
+
+            <th>Дата</th>
+
+            <th>Категория</th>
+
+            <th>Сумма</th>
+
+            <th>Описание</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+    {% for expense in expenses %}
+
+        <tr>
+
+            <td>{{ expense.date }}</td>
+
+            <td>{{ expense.category }}</td>
+
+            <td>{{ expense.amount }}</td>
+
+            <td>{{ expense.description }}</td>
+
+        </tr>
+
+    {% empty %}
+
+        <tr>
+
+            <td colspan="4">
+
+                Расходов нет
+
+            </td>
+
+        </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}
