@@ -94,6 +94,22 @@
 
     </div>
 
+    <div class="card mt-4">
+
+        <div class="card-body">
+
+            <h4>Расходы по категориям</h4>
+
+            <div style="max-width:500px; margin:auto;">
+
+                <canvas id="categoryChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
 <script>
@@ -125,6 +141,40 @@ new Chart(monthlyCtx, {
 
         responsive: true,
 
+        maintainAspectRatio: true
+
+    }
+
+});
+
+</script>
+
+<script>
+
+const categoryCtx =
+    document.getElementById(
+        'categoryChart'
+    );
+
+new Chart(categoryCtx, {
+
+    type: 'pie',
+
+    data: {
+
+        labels: {{ category_labels|safe }},
+
+        datasets: [{
+
+            data: {{ category_totals|safe }}
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
         maintainAspectRatio: true
 
     }

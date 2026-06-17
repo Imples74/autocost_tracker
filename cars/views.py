@@ -470,6 +470,28 @@ def analytics(request):
             float(item['total'])
         )
 
+    category_chart = (
+        expenses
+        .values('category__name')
+        .annotate(
+            total=Sum('amount')
+        )
+        .order_by('-total')
+    )
+
+    category_labels = []
+    category_totals = []
+
+    for item in category_chart:
+
+        category_labels.append(
+            item['category__name']
+        )
+
+        category_totals.append(
+            float(item['total'])
+        )
+
     return render(
         request,
         'cars/analytics.html',
@@ -480,5 +502,7 @@ def analytics(request):
             'top_category': top_category,
             'month_labels': json.dumps(month_labels),
             'month_totals': json.dumps(month_totals),
+            'category_labels': json.dumps(category_labels),
+            'category_totals': json.dumps(category_totals),
         }
     )
