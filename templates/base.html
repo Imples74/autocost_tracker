@@ -75,14 +75,14 @@
       {% if user.is_authenticated %}
 
       <form method="post"
-            action="/logout/"
-            class="d-inline">
+            action="{% url 'logout' %}"
+            class="d-flex align-items-center m-0">
 
         {% csrf_token %}
 
-        <button type="submit"
-                class="btn btn-link nav-link"
-                style="display:inline;padding:0;border:none;">
+        <button
+            type="submit"
+            class="nav-link btn btn-link p-0 border-0 bg-transparent">
 
           Выход
 

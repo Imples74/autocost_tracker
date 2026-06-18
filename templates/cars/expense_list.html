@@ -106,7 +106,7 @@
     <div class="col-md-2">
 
         <button
-            class="btn btn-primary">
+            class="btn btn-primary btn-sm">
 
             Фильтр
 
@@ -117,7 +117,7 @@
 </form>
 
 <a href="/expenses/create/"
-   class="btn btn-success mb-3">
+   class="btn btn-success btn-sm mb-3">
 
     Добавить расход
 
@@ -268,8 +268,27 @@
     {% empty %}
 
         <tr>
-            <td colspan="5">
-                Расходов пока нет
+            <td colspan="5" class="text-center py-5">
+
+                <h4>
+
+                    💰 Расходов пока нет
+
+                </h4>
+
+                <p>
+
+                    Добавьте первый расход.
+
+                </p>
+
+                <a href="/expenses/create/"
+                   class="btn btn-primary btn-sm">
+
+                    Добавить расход
+
+                </a>
+
             </td>
         </tr>
 

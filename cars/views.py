@@ -1,4 +1,4 @@
-from django.shortcuts import render
+п»їfrom django.shortcuts import render
 from .forms import CarForm, ExpenseForm
 from .models import Car, Expense, ExpenseCategory
 from django.db.models import Sum, Count
@@ -64,7 +64,7 @@ def car_create(request):
 
             messages.success(
                 request,
-                "Автомобиль успешно добавлен."
+                "РђРІС‚РѕРјРѕР±РёР»СЊ СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅ."
             )
 
             return redirect('car_list')
@@ -142,7 +142,7 @@ def expense_create(request):
 
             messages.success(
                 request,
-                "Автомобиль успешно изменён."
+                "РђРІС‚РѕРјРѕР±РёР»СЊ СѓСЃРїРµС€РЅРѕ РёР·РјРµРЅС‘РЅ."
             )
 
             return redirect('/expenses/')
@@ -346,7 +346,7 @@ def car_delete(request, pk):
 
         messages.success(
             request,
-            "Автомобиль удалён."
+            "РђРІС‚РѕРјРѕР±РёР»СЊ СѓРґР°Р»С‘РЅ."
         )
 
         return redirect(
@@ -380,7 +380,7 @@ def expense_update(request, pk):
 
             messages.success(
                 request,
-                "Расход успешно изменён."
+                "Р Р°СЃС…РѕРґ СѓСЃРїРµС€РЅРѕ РёР·РјРµРЅС‘РЅ."
             )
 
             return redirect(
@@ -420,7 +420,7 @@ def expense_delete(request, pk):
 
         messages.success(
             request,
-            "Расход удалён."
+            "Р Р°СЃС…РѕРґ СѓРґР°Р»С‘РЅ."
         )
 
         return redirect(
