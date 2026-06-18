@@ -7,6 +7,7 @@ from django.db.models.functions import TruncMonth
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Sum
+from django.contrib import messages
 
 @login_required
 def home(request):
@@ -60,6 +61,11 @@ def car_create(request):
             car = form.save(commit=False)
             car.owner = request.user
             car.save()
+
+            messages.success(
+                request,
+                "Автомобиль успешно добавлен."
+            )
 
             return redirect('car_list')
 
@@ -133,6 +139,11 @@ def expense_create(request):
         if form.is_valid():
 
             form.save()
+
+            messages.success(
+                request,
+                "Автомобиль успешно изменён."
+            )
 
             return redirect('/expenses/')
 
@@ -333,6 +344,11 @@ def car_delete(request, pk):
 
         car.delete()
 
+        messages.success(
+            request,
+            "Автомобиль удалён."
+        )
+
         return redirect(
             'car_list'
         )
@@ -361,6 +377,11 @@ def expense_update(request, pk):
 
         if form.is_valid():
             form.save()
+
+            messages.success(
+                request,
+                "Расход успешно изменён."
+            )
 
             return redirect(
                 'expense_list'
@@ -396,6 +417,11 @@ def expense_delete(request, pk):
     if request.method == 'POST':
 
         expense.delete()
+
+        messages.success(
+            request,
+            "Расход удалён."
+        )
 
         return redirect(
             'expense_list'
