@@ -60,6 +60,22 @@
 
 </div>
 
+<div class="card mb-4">
+
+    <div class="card-body">
+
+        <h4>Расходы по категориям</h4>
+
+        <div style="max-width:400px; margin:auto;">
+
+            <canvas id="carChart"></canvas>
+
+        </div>
+
+    </div>
+
+</div>
+
 <h4>Расходы</h4>
 
 <table class="table table-striped">
@@ -113,5 +129,39 @@
     </tbody>
 
 </table>
+
+<script>
+
+const carCtx =
+    document.getElementById(
+        'carChart'
+    );
+
+new Chart(carCtx, {
+
+    type: 'pie',
+
+    data: {
+
+        labels: {{ chart_labels|safe }},
+
+        datasets: [{
+
+            data: {{ chart_totals|safe }}
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+        maintainAspectRatio: true
+
+    }
+
+});
+
+</script>
 
 {% endblock %}

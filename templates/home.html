@@ -6,29 +6,52 @@
 
 {% block content %}
 
-<h1 class="mb-4">
-    AutoCost Tracker
-</h1>
+<div class="row mb-5">
 
-<p class="lead">
-    Система учёта расходов на автомобиль
-</p>
+    <div class="col-lg-7">
 
-<div class="row mb-4">
+        <div class="card shadow-sm h-100">
 
-    <div class="col-md-4">
+            <div class="card-body p-5">
 
-        <div class="card text-center">
+                <h1 class="display-4 fw-bold">
 
-            <div class="card-body">
+                    AutoCost Tracker
 
-                <h5>
-                    Автомобили
-                </h5>
+                </h1>
 
-                <h2>
-                    {{ cars_count }}
-                </h2>
+                <p class="lead mt-4">
+
+                    Веб-сервис для учета, анализа и прогнозирования
+                    расходов на содержание автомобиля.
+
+                </p>
+
+                <p>
+
+                    Сервис помогает автовладельцам фиксировать расходы,
+                    распределять их по категориям, анализировать структуру
+                    затрат и планировать бюджет на следующий месяц.
+
+                </p>
+
+                <div class="mt-4">
+
+                    <a href="/cars/"
+                       class="btn btn-primary btn-lg">
+
+                        Перейти к автомобилям
+
+                    </a>
+
+                    <a href="/analytics/"
+                       class="btn btn-outline-success btn-lg ms-2">
+
+                        Смотреть аналитику
+
+                    </a>
+
+                </div>
 
             </div>
 
@@ -36,39 +59,37 @@
 
     </div>
 
-    <div class="col-md-4">
+    <div class="col-lg-5">
 
-        <div class="card text-center">
-
-            <div class="card-body">
-
-                <h5>
-                    Расходы
-                </h5>
-
-                <h2>
-                    {{ expenses_count }}
-                </h2>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="col-md-4">
-
-        <div class="card text-center">
+        <div class="card shadow-sm h-100">
 
             <div class="card-body">
 
-                <h5>
-                    Общая сумма
-                </h5>
+                <h3>
 
-                <h2>
-                    {{ total_expenses }}
-                </h2>
+                    Что умеет сервис
+
+                </h3>
+
+                <hr>
+
+                <p>✔ Учет одного или нескольких автомобилей</p>
+
+                <hr>
+
+                <p>✔ Добавление расходов по категориям</p>
+
+                <hr>
+
+                <p>✔ Фильтрация расходов</p>
+
+                <hr>
+
+                <p>✔ Аналитика расходов</p>
+
+                <hr>
+
+                <p>✔ Прогноз затрат на следующий месяц</p>
 
             </div>
 
@@ -78,29 +99,170 @@
 
 </div>
 
-<div class="card">
 
-    <div class="card-body">
 
-        <h4>
-            Быстрые действия
-        </h4>
+<div class="row mb-5">
 
-        <a
-            href="/cars/create/"
-            class="btn btn-success me-2">
+    <div class="col-md-4">
 
-            Добавить автомобиль
+        <div class="card shadow-sm text-center">
 
-        </a>
+            <div class="card-body">
 
-        <a
-            href="/expenses/create/"
-            class="btn btn-primary">
+                <h5>
 
-            Добавить расход
+                    Автомобили
 
-        </a>
+                </h5>
+
+                <h1>
+
+                    {{ cars_count }}
+
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm text-center">
+
+            <div class="card-body">
+
+                <h5>
+
+                    Расходы
+
+                </h5>
+
+                <h1>
+
+                    {{ expenses_count }}
+
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm text-center">
+
+            <div class="card-body">
+
+                <h5>
+
+                    Общая сумма
+
+                </h5>
+
+                <h1>
+
+                    {{ total_expenses }}
+
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<h2 class="mb-4">
+
+    Основные возможности
+
+</h2>
+
+<div class="row">
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <h3>
+
+                    Учет расходов
+
+                </h3>
+
+                <p class="mt-3">
+
+                    Добавление расходов
+                    на топливо, ремонт,
+                    страховку, парковку,
+                    мойку и другие категории.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <h3>
+
+                    Аналитика
+
+                </h3>
+
+                <p class="mt-3">
+
+                    Просмотр структуры расходов,
+                    круговых диаграмм,
+                    статистики и наиболее затратных категорий.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card shadow-sm h-100">
+
+            <div class="card-body">
+
+                <h3>
+
+                    Прогноз
+
+                </h3>
+
+                <p class="mt-3">
+
+                    На основе истории расходов
+                    рассчитывается примерная сумма
+                    затрат на следующий месяц.
+
+                </p>
+
+            </div>
+
+        </div>
 
     </div>
 

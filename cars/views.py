@@ -529,6 +529,28 @@ def car_detail(request, pk):
 
     expense_count = expenses.count()
 
+    category_chart = (
+        expenses
+        .values('category__name')
+        .annotate(
+            total=Sum('amount')
+        )
+        .order_by('-total')
+    )
+
+    labels = []
+    totals = []
+
+    for item in category_chart:
+
+        labels.append(
+            item['category__name']
+        )
+
+        totals.append(
+            float(item['total'])
+        )
+
     return render(
         request,
         'cars/car_detail.html',
@@ -537,5 +559,7 @@ def car_detail(request, pk):
             'expenses': expenses,
             'total_expenses': total_expenses,
             'expense_count': expense_count,
+            'chart_labels': json.dumps(labels),
+            'chart_totals': json.dumps(totals),
         }
     )
