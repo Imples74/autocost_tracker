@@ -1,6 +1,25 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+
+  <style>
+
+    body{
+
+    background:#f5f5f5;
+
+    }
+
+    .card{
+
+    border:none;
+
+    border-radius:12px;
+
+    }
+
+  </style>  
+  
   <meta charset="UTF-8"></meta>
 
   <meta name="viewport"
@@ -30,24 +49,26 @@
 
     <div class="navbar-nav">
 
-      <a class="nav-link"
-          href="/">
+
+
+      
+      
+      <a class="nav-link {% if request.path == '/' %}active fw-bold{% endif %}"
+         href="/">
         Главная
       </a>
 
-      <a class="nav-link"
-          href="/cars/">
-        Автомобили
-      </a>
+      <a class="nav-link {% if '/cars/' in request.path %}active fw-bold{% endif %}"
+         href="/cars/">
+        Автомобили</a>      
 
-
-      <a class="nav-link"
-          href="/expenses/">
+      <a class="nav-link {% if '/expenses/' in request.path %}active fw-bold{% endif %}"
+         href="/expenses/">
         Расходы
       </a>
 
-      <a class="nav-link"
-          href="/analytics/">
+      <a class="nav-link {% if '/analytics/' in request.path %}active fw-bold{% endif %}"
+         href="/analytics/">
         Аналитика
       </a>
 
@@ -90,5 +111,11 @@
 
 </div>
 
+<footer class="bg-dark text-white text-center py-3 mt-5">
+
+  AutoCost Tracker © 2026
+
+</footer>  
+  
 </body>
 </html>
