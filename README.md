@@ -13,7 +13,7 @@
 Проект будет размещен на PythonAnywhere.
 
 **Ссылка на сайт:**
-`https://impless74.pythonanywhere.com`
+`https://imples74.pythonanywhere.com`
 
 ---
 
